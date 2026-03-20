@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using DotnetTask.Models;
 
-namespace MvcMovie.Data
+namespace DotnetTask.Data
 {
     public class MvcMovieContext : DbContext
     {
