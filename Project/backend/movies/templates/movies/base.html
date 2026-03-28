@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Каталог фільмів{% endblock %}</title>
+    <title>{% block title %}Movie Catalog{% endblock %}</title>
     <style>
         :root {
-            --bg: #f4efe8;
-            --panel: #fffaf4;
+            --bg: #f6f7f8;
+            --panel: #ffffff;
             --panel-strong: #ffffff;
-            --text: #1d1a17;
-            --muted: #6f655e;
-            --accent: #b24c36;
-            --accent-dark: #7d2f1f;
-            --line: #dfd0c2;
-            --shadow: 0 18px 45px rgba(61, 37, 21, 0.12);
+            --text: #1f2933;
+            --muted: #52606d;
+            --accent: #2f6fed;
+            --accent-dark: #1d4fb8;
+            --line: #d9e2ec;
+            --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
         }
 
         * {
@@ -23,11 +23,9 @@
 
         body {
             margin: 0;
-            font-family: Georgia, "Times New Roman", serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             color: var(--text);
-            background:
-                radial-gradient(circle at top left, rgba(178, 76, 54, 0.12), transparent 28%),
-                linear-gradient(160deg, #f3eadf 0%, #f8f3ec 45%, #eee3d3 100%);
+            background: var(--bg);
             min-height: 100vh;
         }
 
@@ -39,46 +37,44 @@
         .page {
             width: min(1040px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 40px 0 56px;
+            padding: 32px 0 48px;
         }
 
         .hero {
-            background: linear-gradient(135deg, rgba(255, 250, 244, 0.95), rgba(252, 241, 227, 0.9));
-            border: 1px solid rgba(178, 76, 54, 0.15);
-            border-radius: 28px;
-            padding: 32px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
             box-shadow: var(--shadow);
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
 
         .eyebrow {
             margin: 0 0 10px;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.08em;
             font-size: 0.75rem;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         h1, h2 {
-            margin: 0 0 12px;
-            font-weight: normal;
+            margin: 0 0 8px;
+            font-weight: 600;
         }
 
         .subtitle {
-            max-width: 620px;
             color: var(--muted);
-            line-height: 1.6;
+            line-height: 1.5;
             margin: 0;
         }
 
         .panel {
-            background: rgba(255, 255, 255, 0.78);
+            background: var(--panel);
             border: 1px solid var(--line);
-            border-radius: 24px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 20px;
             box-shadow: var(--shadow);
-            backdrop-filter: blur(8px);
         }
 
         .panel + .panel {
@@ -91,7 +87,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .search-form {
@@ -102,9 +98,9 @@
 
         .form-control {
             width: min(320px, 100%);
-            padding: 12px 14px;
-            border: 1px solid #ccb9a7;
-            border-radius: 14px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
             font: inherit;
             background: var(--panel-strong);
         }
@@ -113,32 +109,27 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 18px;
-            border-radius: 14px;
-            border: 1px solid transparent;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
             font: inherit;
             cursor: pointer;
-            transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 22px rgba(125, 47, 31, 0.14);
         }
 
         .btn-primary {
             background: var(--accent);
             color: #fff;
+            border-color: var(--accent);
         }
 
         .btn-secondary {
-            background: transparent;
-            border-color: var(--line);
+            background: #fff;
         }
 
         .btn-danger {
-            background: #8f2d22;
+            background: #d64545;
             color: #fff;
+            border-color: #d64545;
         }
 
         .grid {
@@ -147,12 +138,12 @@
         }
 
         .movie-card {
-            padding: 18px;
+            padding: 16px;
             border: 1px solid var(--line);
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.82);
+            border-radius: 12px;
+            background: #fff;
             display: grid;
-            gap: 12px;
+            gap: 10px;
         }
 
         .movie-meta {
@@ -165,11 +156,11 @@
         .badge {
             display: inline-flex;
             align-items: center;
-            padding: 6px 10px;
+            padding: 4px 10px;
             border-radius: 999px;
-            background: rgba(178, 76, 54, 0.12);
+            background: #eef4ff;
             color: var(--accent-dark);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .actions {
@@ -186,10 +177,10 @@
 
         .message {
             padding: 14px 16px;
-            border-radius: 14px;
-            background: #eff8ec;
-            color: #285f32;
-            border: 1px solid #bdd7bf;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #174ea6;
+            border: 1px solid #bfdbfe;
         }
 
         .field {
@@ -218,8 +209,8 @@
             text-align: center;
             color: var(--muted);
             border: 1px dashed var(--line);
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.45);
+            border-radius: 12px;
+            background: #fbfcfe;
         }
 
         @media (max-width: 700px) {
@@ -230,8 +221,8 @@
 
             .hero,
             .panel {
-                padding: 20px;
-                border-radius: 20px;
+                padding: 16px;
+                border-radius: 14px;
             }
 
             .toolbar {
@@ -249,11 +240,10 @@
 <body>
     <main class="page">
         <section class="hero">
-            <p class="eyebrow">MVC Project 12</p>
-            <h1>Каталог фільмів</h1>
+            <h1>Movie Catalog</h1>
             <p class="subtitle">
-                Невеликий Django-проєкт у стилі MVC: список фільмів, додавання, редагування,
-                видалення та пошук за назвою або режисером.
+                Django MVC project for listing, adding, editing, deleting,
+                and searching movies.
             </p>
         </section>
 

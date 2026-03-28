@@ -6,10 +6,10 @@
     <section class="panel">
         <div class="toolbar">
             <div>
-                <p class="eyebrow">Форма</p>
+                <p class="eyebrow">Form</p>
                 <h2>{{ page_title }}</h2>
             </div>
-            <a href="{% url 'movies:list' %}" class="btn btn-secondary">Назад до списку</a>
+            <a href="{% url 'movies:list' %}" class="btn btn-secondary">Back to list</a>
         </div>
 
         <form method="post" novalidate>
@@ -42,7 +42,7 @@
 
             <div class="actions">
                 <button type="submit" class="btn btn-primary">{{ submit_label }}</button>
-                <a href="{% url 'movies:list' %}" class="btn btn-secondary">Скасувати</a>
+                <a href="{% url 'movies:list' %}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
     </section>

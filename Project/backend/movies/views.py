@@ -36,7 +36,7 @@ def movie_create(request):
     return render(
         request,
         "movies/movie_form.html",
-        {"form": form, "page_title": "Add Movie", "submit_label": "Create"},
+        {"form": form, "page_title": "Add Movie", "submit_label": "Save"},
     )
 
 
@@ -58,7 +58,7 @@ def movie_update(request, pk):
             "form": form,
             "movie": movie,
             "page_title": "Edit Movie",
-            "submit_label": "Save changes",
+            "submit_label": "Update",
         },
     )
 

@@ -1,6 +1,6 @@
 {% extends "movies/base.html" %}
 
-{% block title %}Каталог фільмів{% endblock %}
+{% block title %}Movie Catalog{% endblock %}
 
 {% block content %}
     <section class="panel">
@@ -11,14 +11,14 @@
                     name="q"
                     value="{{ query }}"
                     class="form-control"
-                    placeholder="Пошук за назвою або режисером"
+                    placeholder="Search by title or director"
                 >
-                <button type="submit" class="btn btn-secondary">Шукати</button>
+                <button type="submit" class="btn btn-secondary">Search</button>
             </form>
-            <a href="{% url 'movies:create' %}" class="btn btn-primary">Додати фільм</a>
+            <a href="{% url 'movies:create' %}" class="btn btn-primary">Add Movie</a>
         </div>
 
-        <p class="subtitle">У каталозі зараз {{ movie_count }} фільм(ів).</p>
+        <p class="subtitle">{{ movie_count }} movie(s) in the catalog.</p>
     </section>
 
     <section class="panel">
@@ -29,13 +29,13 @@
                         <div>
                             <h2>{{ movie.title }}</h2>
                             <div class="movie-meta">
-                                <span>Режисер: {{ movie.director }}</span>
-                                <span class="badge">Оцінка: {{ movie.rating }}/10</span>
+                                <span>Director: {{ movie.director }}</span>
+                                <span class="badge">Rating: {{ movie.rating }}/10</span>
                             </div>
                         </div>
                         <div class="actions">
-                            <a href="{% url 'movies:update' movie.pk %}" class="btn btn-secondary">Редагувати</a>
-                            <a href="{% url 'movies:delete' movie.pk %}" class="btn btn-danger">Видалити</a>
+                            <a href="{% url 'movies:update' movie.pk %}" class="btn btn-secondary">Edit</a>
+                            <a href="{% url 'movies:delete' movie.pk %}" class="btn btn-danger">Delete</a>
                         </div>
                     </article>
                 {% endfor %}
@@ -43,9 +43,9 @@
         {% else %}
             <div class="empty-state">
                 {% if query %}
-                    За запитом "{{ query }}" нічого не знайдено.
+                    No results found for "{{ query }}".
                 {% else %}
-                    Каталог поки порожній. Додай перший фільм.
+                    The catalog is empty. Add your first movie.
                 {% endif %}
             </div>
         {% endif %}

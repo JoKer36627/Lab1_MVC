@@ -1,20 +1,20 @@
 {% extends "movies/base.html" %}
 
-{% block title %}Видалити фільм{% endblock %}
+{% block title %}Delete Movie{% endblock %}
 
 {% block content %}
     <section class="panel">
-        <p class="eyebrow">Підтвердження</p>
-        <h2>Видалити "{{ movie.title }}"?</h2>
+        <p class="eyebrow">Confirmation</p>
+        <h2>Delete "{{ movie.title }}"?</h2>
         <p class="subtitle">
-            Режисер: {{ movie.director }}. Оцінка: {{ movie.rating }}/10.
-            Цю дію неможливо скасувати.
+            Director: {{ movie.director }}. Rating: {{ movie.rating }}/10.
+            This action cannot be undone.
         </p>
 
         <form method="post" class="actions" style="margin-top: 20px;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Так, видалити</button>
-            <a href="{% url 'movies:list' %}" class="btn btn-secondary">Ні, повернутись</a>
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'movies:list' %}" class="btn btn-secondary">Back</a>
         </form>
     </section>
 {% endblock %}
