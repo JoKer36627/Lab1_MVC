@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Каталог фільмів{% endblock %}</title>
+    <style>
+        :root {
+            --bg: #f4efe8;
+            --panel: #fffaf4;
+            --panel-strong: #ffffff;
+            --text: #1d1a17;
+            --muted: #6f655e;
+            --accent: #b24c36;
+            --accent-dark: #7d2f1f;
+            --line: #dfd0c2;
+            --shadow: 0 18px 45px rgba(61, 37, 21, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(178, 76, 54, 0.12), transparent 28%),
+                linear-gradient(160deg, #f3eadf 0%, #f8f3ec 45%, #eee3d3 100%);
+            min-height: 100vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1040px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 40px 0 56px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 250, 244, 0.95), rgba(252, 241, 227, 0.9));
+            border: 1px solid rgba(178, 76, 54, 0.15);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            margin: 0 0 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        h1, h2 {
+            margin: 0 0 12px;
+            font-weight: normal;
+        }
+
+        .subtitle {
+            max-width: 620px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+        }
+
+        .panel + .panel {
+            margin-top: 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .form-control {
+            width: min(320px, 100%);
+            padding: 12px 14px;
+            border: 1px solid #ccb9a7;
+            border-radius: 14px;
+            font: inherit;
+            background: var(--panel-strong);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            font: inherit;
+            cursor: pointer;
+            transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(125, 47, 31, 0.14);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--line);
+        }
+
+        .btn-danger {
+            background: #8f2d22;
+            color: #fff;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .movie-card {
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.82);
+            display: grid;
+            gap: 12px;
+        }
+
+        .movie-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--muted);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(178, 76, 54, 0.12);
+            color: var(--accent-dark);
+            font-size: 0.95rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .messages {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .message {
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #eff8ec;
+            color: #285f32;
+            border: 1px solid #bdd7bf;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            font-weight: bold;
+        }
+
+        .errors {
+            color: #9f231c;
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        .helptext {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .empty-state {
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+            border: 1px dashed var(--line);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        @media (max-width: 700px) {
+            .page {
+                width: min(100% - 20px, 100%);
+                padding-top: 20px;
+            }
+
+            .hero,
+            .panel {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .toolbar {
+                align-items: stretch;
+            }
+
+            .search-form,
+            .search-form .form-control,
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <p class="eyebrow">MVC Project 12</p>
+            <h1>Каталог фільмів</h1>
+            <p class="subtitle">
+                Невеликий Django-проєкт у стилі MVC: список фільмів, додавання, редагування,
+                видалення та пошук за назвою або режисером.
+            </p>
+        </section>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

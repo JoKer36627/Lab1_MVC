@@ -1,0 +1,53 @@
+{% extends "movies/base.html" %}
+
+{% block title %}Каталог фільмів{% endblock %}
+
+{% block content %}
+    <section class="panel">
+        <div class="toolbar">
+            <form method="get" class="search-form">
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query }}"
+                    class="form-control"
+                    placeholder="Пошук за назвою або режисером"
+                >
+                <button type="submit" class="btn btn-secondary">Шукати</button>
+            </form>
+            <a href="{% url 'movies:create' %}" class="btn btn-primary">Додати фільм</a>
+        </div>
+
+        <p class="subtitle">У каталозі зараз {{ movie_count }} фільм(ів).</p>
+    </section>
+
+    <section class="panel">
+        {% if movies %}
+            <div class="grid">
+                {% for movie in movies %}
+                    <article class="movie-card">
+                        <div>
+                            <h2>{{ movie.title }}</h2>
+                            <div class="movie-meta">
+                                <span>Режисер: {{ movie.director }}</span>
+                                <span class="badge">Оцінка: {{ movie.rating }}/10</span>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <a href="{% url 'movies:update' movie.pk %}" class="btn btn-secondary">Редагувати</a>
+                            <a href="{% url 'movies:delete' movie.pk %}" class="btn btn-danger">Видалити</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                {% if query %}
+                    За запитом "{{ query }}" нічого не знайдено.
+                {% else %}
+                    Каталог поки порожній. Додай перший фільм.
+                {% endif %}
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}
