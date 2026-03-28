@@ -90,6 +90,19 @@
             margin-bottom: 14px;
         }
 
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .topbar-note {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
         .search-form {
             display: flex;
             gap: 10px;
@@ -239,11 +252,31 @@
 </head>
 <body>
     <main class="page">
+        <div class="topbar">
+            <div class="topbar-note">
+                {% if request.user.is_authenticated %}
+                    Signed in as {{ request.user.username }}
+                {% else %}
+                    Guest mode
+                {% endif %}
+            </div>
+            <div class="actions">
+                {% if request.user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+                {% endif %}
+            </div>
+        </div>
+
         <section class="hero">
             <h1>Movie Catalog</h1>
             <p class="subtitle">
-                Django MVC project for listing, adding, editing, deleting,
-                and searching movies.
+                Django MVC project for listing and searching movies.
+                Add, edit, and delete actions are available after login.
             </p>
         </section>
 

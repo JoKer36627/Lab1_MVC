@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -23,6 +24,7 @@ def movie_list(request):
     return render(request, "movies/movie_list.html", context)
 
 
+@login_required
 def movie_create(request):
     if request.method == "POST":
         form = MovieForm(request.POST)
@@ -40,6 +42,7 @@ def movie_create(request):
     )
 
 
+@login_required
 def movie_update(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     if request.method == "POST":
@@ -63,6 +66,7 @@ def movie_update(request, pk):
     )
 
 
+@login_required
 def movie_delete(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
     if request.method == "POST":
