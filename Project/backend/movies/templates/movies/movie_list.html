@@ -28,19 +28,31 @@
             <div class="grid">
                 {% for movie in movies %}
                     <article class="movie-card">
-                        <div>
-                            <h2>{{ movie.title }}</h2>
-                            <div class="movie-meta">
-                                <span>Director: {{ movie.director }}</span>
-                                <span class="badge">Rating: {{ movie.rating }}/10</span>
-                            </div>
+                        <div class="poster">
+                            {% if movie.poster_url %}
+                                <img src="{{ movie.poster_url }}" alt="{{ movie.title }} poster">
+                            {% else %}
+                                <div class="poster-fallback">No poster</div>
+                            {% endif %}
                         </div>
-                        {% if request.user.is_authenticated %}
-                            <div class="actions">
-                                <a href="{% url 'movies:update' movie.pk %}" class="btn btn-secondary">Edit</a>
-                                <a href="{% url 'movies:delete' movie.pk %}" class="btn btn-danger">Delete</a>
+                        <div class="movie-card-body">
+                            <div>
+                                <h2>{{ movie.title }}</h2>
+                                <div class="movie-meta">
+                                    <span>Director: {{ movie.director }}</span>
+                                    <span class="badge">Rating: {{ movie.normalized_rating }}/5.0</span>
+                                    <span class="star-rating" aria-label="Rating {{ movie.normalized_rating }} out of 5">
+                                        <span class="star-rating-fill" style="width: {{ movie.star_fill_percent }}%"></span>
+                                    </span>
+                                </div>
                             </div>
-                        {% endif %}
+                            {% if request.user.is_authenticated %}
+                                <div class="actions">
+                                    <a href="{% url 'movies:update' movie.pk %}" class="btn btn-secondary">Edit</a>
+                                    <a href="{% url 'movies:delete' movie.pk %}" class="btn btn-danger">Delete</a>
+                                </div>
+                            {% endif %}
+                        </div>
                     </article>
                 {% endfor %}
             </div>

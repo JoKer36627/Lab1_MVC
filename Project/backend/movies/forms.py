@@ -6,7 +6,7 @@ from .models import Movie
 class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
-        fields = ["title", "director", "rating"]
+        fields = ["title", "director", "rating", "poster_url"]
         widgets = {
             "title": forms.TextInput(
                 attrs={"placeholder": "Movie title", "class": "form-control"}
@@ -16,10 +16,16 @@ class MovieForm(forms.ModelForm):
             ),
             "rating": forms.NumberInput(
                 attrs={
-                    "min": "1",
-                    "max": "10",
-                    "step": "0.1",
-                    "placeholder": "8.5",
+                    "min": "0.5",
+                    "max": "5.0",
+                    "step": "0.5",
+                    "placeholder": "4.5",
+                    "class": "form-control",
+                }
+            ),
+            "poster_url": forms.URLInput(
+                attrs={
+                    "placeholder": "https://example.com/poster.jpg",
                     "class": "form-control",
                 }
             ),
@@ -30,3 +36,6 @@ class MovieForm(forms.ModelForm):
 
     def clean_director(self):
         return self.cleaned_data["director"].strip()
+
+    def clean_poster_url(self):
+        return self.cleaned_data["poster_url"].strip()
