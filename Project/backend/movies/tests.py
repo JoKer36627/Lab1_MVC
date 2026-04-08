@@ -26,6 +26,12 @@ class MovieViewsTests(TestCase):
         self.assertContains(response, "Rating: 4.5/5.0")
         self.assertContains(response, "inception.jpg")
 
+    def test_root_redirects_to_movies_app(self):
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("movies:list"))
+
     def test_create_requires_login(self):
         response = self.client.get(reverse("movies:create"))
 

@@ -24,7 +24,7 @@ This repository contains a Django MVC application for managing a movie catalog.
 - Model: `backend/movies/models.py`
 - Controller/View logic: `backend/movies/views.py`
 - Templates: `backend/movies/templates/movies/`
-- Routing: `backend/movies/urls.py`, `backend/config/urls.py`
+- Routing: `backend/movies/urls.py`, `backend/mysite/urls.py`
 
 ## How To Run
 
