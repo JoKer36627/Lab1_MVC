@@ -14,7 +14,8 @@ class MovieViewsTests(TestCase):
         self.movie = Movie.objects.create(
             title="Inception",
             director="Christopher Nolan",
-            rating="8.8",
+            rating="4.5",
+            poster_url="https://example.com/inception.jpg",
         )
 
     def test_movie_list_page_renders(self):
@@ -22,6 +23,14 @@ class MovieViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Inception")
+        self.assertContains(response, "Rating: 4.5/5.0")
+        self.assertContains(response, "inception.jpg")
+
+    def test_root_redirects_to_movies_app(self):
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse("movies:list"))
 
     def test_create_requires_login(self):
         response = self.client.get(reverse("movies:create"))
@@ -33,7 +42,12 @@ class MovieViewsTests(TestCase):
         self.client.login(username="tester", password="strong-pass-123")
         response = self.client.post(
             reverse("movies:create"),
-            {"title": "Arrival", "director": "Denis Villeneuve", "rating": "8.1"},
+            {
+                "title": "Arrival",
+                "director": "Denis Villeneuve",
+                "rating": "4.0",
+                "poster_url": "https://example.com/arrival.jpg",
+            },
             follow=True,
         )
 
@@ -47,14 +61,15 @@ class MovieViewsTests(TestCase):
             {
                 "title": "Inception",
                 "director": "Christopher Nolan",
-                "rating": "9.0",
+                "rating": "5.0",
+                "poster_url": "https://example.com/inception-new.jpg",
             },
             follow=True,
         )
 
         self.assertEqual(response.status_code, 200)
         self.movie.refresh_from_db()
-        self.assertEqual(str(self.movie.rating), "9.0")
+        self.assertEqual(str(self.movie.rating), "5.0")
 
     def test_movie_can_be_deleted(self):
         self.client.login(username="tester", password="strong-pass-123")
@@ -70,7 +85,7 @@ class MovieViewsTests(TestCase):
         Movie.objects.create(
             title="The Matrix",
             director="The Wachowskis",
-            rating="8.7",
+            rating="4.5",
         )
 
         response = self.client.get(reverse("movies:list"), {"q": "wach"})
@@ -83,3 +98,13 @@ class MovieViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Login")
+
+    def test_rating_must_fit_new_five_star_scale(self):
+        self.client.login(username="tester", password="strong-pass-123")
+        response = self.client.post(
+            reverse("movies:create"),
+            {"title": "Invalid", "director": "Nobody", "rating": "5.5", "poster_url": ""},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Ensure this value is less than or equal to 5.0")
